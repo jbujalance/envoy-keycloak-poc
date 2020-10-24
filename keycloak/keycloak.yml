@@ -27,7 +27,10 @@ services:
         target: /tmp/real-export.json
         read_only: true
     ports:
-      - 8080:8080
+      - target: 8080
+        published: ${KEYCLOAK_PUBLISHED_PORT}
+        protocol: tcp
+        mode: host
     depends_on:
       - postgres
 
