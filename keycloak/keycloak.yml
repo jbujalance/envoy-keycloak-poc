@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: keycloak
+    ports:
+      - 5432:5432
+  keycloak:
+    image:  jboss/keycloak:latest
+    environment:
+      DB_VENDOR: postgres
+      DB_ADDR: postgres
+      DB_DATABASE: keycloak
+      DB_USER: keycloak
+      DB_PASSWORD: keycloak
+      DB_SCHEMA: public
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: admin
+      KEYCLOAK_IMPORT: /tmp/real-export.json
+    volumes:
+      - type: bind
+        source: ./realm-export.json
+        target: /tmp/real-export.json
+        read_only: true
+    ports:
+      - 8080:8080
+    depends_on:
+      - postgres
+
+networks:
+  default:
+    name: keycloak-network
