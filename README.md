@@ -25,3 +25,13 @@ docker-compose -f server\server.yml --env-file config\.env up -d
 ```
 
 **ATTENTION:** Beware that the Dockerfile and the compose file in the [./server](./server) directory are designe to work with the root context. The compose file must be executed **from the root directory of the project** or it will fail.
+
+## Client
+
+The client that makes an authentified call to the server.
+The client first gets the authentication token from the identity server, then sends the authenticated request to the server.
+
+Make a call **from the [./client](./client) directory** with:
+```
+npm start
+```
