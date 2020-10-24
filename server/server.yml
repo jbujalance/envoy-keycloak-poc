@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  server:
+    build:
+      context: ../
+      dockerfile: ./server/Dockerfile
+    environment:
+      SERVER_PUBLISHED_PORT: ${SERVER_PUBLISHED_PORT}
+    ports:
+      - target: ${SERVER_PUBLISHED_PORT}
+        published: ${SERVER_PUBLISHED_PORT}
+        protocol: tcp
+        mode: host
