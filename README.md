@@ -11,7 +11,7 @@ This pattern allows to abstract the authentication validation out of the server,
 
 Start the Keycloak server **from the root directory of the project** with:
 ```
-docker-compose -f keycloak\keycloak.yml --env-file config\.env up -d
+docker-compose -f keycloak\keycloak_compose.yml --env-file config\.env up -d
 ```
 
 ## Server
@@ -21,7 +21,7 @@ The server is completely unawar of the authentication infrastructure, and is not
 
 Start the server **from the root directory of the project** with:
 ```
-docker-compose -f server\server.yml --env-file config\.env up -d
+docker-compose -f server\server_compose.yml --env-file config\.env up -d
 ```
 
 **ATTENTION:** Beware that the Dockerfile and the compose file in the [./server](./server) directory are designe to work with the root context. The compose file must be executed **from the root directory of the project** or it will fail.
