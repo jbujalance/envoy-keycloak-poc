@@ -24,6 +24,11 @@ This will set up the following elements:
 The Keycloak server is used to authenticate the client.
 It is set up with a realm and a client configuration.
 The client uses the `client-credentials` grant to obtain an access token.
+You can see the realm configuration at http://localhost:8080/auth/realms/Envoy-Keycloak-POC/.well-known/openid-configuration
+
+Login to the Keycloak server at http://localhost:8080 with the credentials:
+* User: `admin`
+* Password: `admin`
 
 ## Server
 
