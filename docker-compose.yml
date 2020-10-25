@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  envoy:
+    extends:
+      file: ./envoy/envoy_compose.yml
+      service: envoy
+  server:
+    extends:
+      file: ./server/server_compose.yml
+      service: server
+  postgres:
+    extends:
+      file: ./keycloak/keycloak_compose.yml
+      service: postgres
+  keycloak:
+    extends:
+      file: ./keycloak/keycloak_compose.yml
+      service: keycloak
+    depends_on:
+      - postgres

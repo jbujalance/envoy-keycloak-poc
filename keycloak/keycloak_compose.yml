@@ -31,9 +31,5 @@ services:
         published: ${KEYCLOAK_PUBLISHED_PORT}
         protocol: tcp
         mode: host
-    depends_on:
-      - postgres
-
-networks:
-  default:
-    name: keycloak-network
+    #depends_on:
+    #  - postgres
