@@ -15,7 +15,7 @@ client.interceptors.request.use(
 );
 
 // Make the actual call to the protected server
-client.get(`http://localhost:${process.env.SERVER_PUBLISHED_PORT}/`)
+client.get(`http://localhost:${process.env.SERVER_PUBLISHED_PORT}/`)    // TODO Send the request to the envoy proxy, not to the server
     .then(function (response) {
         console.log(response);
     })

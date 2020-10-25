@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  envoy:
+    image: envoyproxy/envoy-dev
+    ports:
+      - target: 10000
+        published: ${ENVOY_PUBLISHED_PORT}
+        protocol: tcp
+        mode: host
+      - target: 9901
+        published: 9901
+        protocol: tcp
+        mode: host
+    volumes:
+      - type: bind
+        source: ./envoy.yml
+        target: /etc/envoy/envoy.yaml # We override the default configuration
+        read_only: true
