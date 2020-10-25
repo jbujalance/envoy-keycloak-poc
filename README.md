@@ -30,6 +30,11 @@ The client uses the `client-credentials` grant to obtain an access token.
 The server that sits behind the Envoy proxy and receives requests from the client.
 The server is completely unaware of the authentication infrastructure, and is not explicitely protected by any authentication, as can be seen in the server source code at [./server/server.js](./server/server.js)
 
+## Envoy proxy
+
+The envoy proxy sits in front of the target server, proxying all the requests sent to the server.
+This proxy is responsible for catching the authentication token of the incoming requests, and validating them against the Keycloak server that has issued the token, usin the corresponding JWKS (JSON Web Key Sets).
+
 ## Client
 
 The client that makes an authentified call to the server.
