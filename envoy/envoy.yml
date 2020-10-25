@@ -24,6 +24,22 @@ static_resources:
                           route: 
                             cluster: poc_server
                 http_filters:
+                  - name: envoy.filters.http.jwt_authn
+                    typed_config: 
+                      "@type": type.googleapis.com/envoy.config.filter.http.jwt_authn.v2alpha.JwtAuthentication
+                      providers:
+                        auth_keycloak:
+                          issuer: http://localhost:8080/auth/realms/Envoy-Keycloak-POC
+                          remote_jwks:
+                            http_uri:
+                              uri: http://localhost:8080/auth/realms/Envoy-Keycloak-POC/protocol/openid-connect/certs
+                              cluster: keycloak
+                              timeout: 5s
+                            cache_duration:
+                              seconds: 300
+                      rules:
+                      - match: {prefix: /}
+                        requires: {provider_name: auth_keycloak}
                   - name: envoy.filters.http.router
 
   clusters:
@@ -40,8 +56,21 @@ static_resources:
               - endpoint:
                   address:
                     socket_address:
-                      address: server
-                      port_value: 8081 # TODO use env varible for server port
+                      address: server # This is the 'Docker name' of the server. This works because the Envoy container and the server container share the same Docker network
+                      port_value: 8081 # TODO use env varible SERVER_PUBLISHED_PORT for server port
+    - name: keycloak
+      connect_timeout: 0.25s
+      type: LOGICAL_DNS
+      lb_policy: ROUND_ROBIN
+      load_assignment:
+        cluster_name: keycloak
+        endpoints:
+        - lb_endpoints:
+          - endpoint:
+              address:
+                socket_address:
+                  address: keycloak
+                  port_value: 8080  # TODO use env varible KEYCLOAK_PUBLISHED_PORT for server port
 
 admin:
   access_log_path: /tmp/admin_access.log
